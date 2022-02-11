@@ -28,7 +28,6 @@ abstract class BaseRequest {
     } else {
       uri = Uri.http(authority(), pathStr, params);
     }
-    print("url:${uri.toString()}");
     return uri.toString();
   }
 
@@ -37,7 +36,7 @@ abstract class BaseRequest {
   Map<String, String> params = Map();
   Map<String, String> headers = Map();
   BaseRequest add(String k, Object v) {
-    pathParams[k] = v.toString();
+    params[k] = v.toString();
     return this;
   }
 

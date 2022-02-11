@@ -59,7 +59,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print('42.'.padLeft(5));
     return Scaffold(
       appBar: AppBar(
         title: Text('测试Title'),
@@ -74,6 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.red,
         ),
       ),
+      // open detail page
       floatingActionButton: FloatingActionButton(onPressed: () {
         setState(() {
           _height += 100;
