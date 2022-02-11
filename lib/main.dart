@@ -24,10 +24,10 @@ class _NewTestState extends State<NewTest> {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -48,27 +48,40 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int _count = 0;
+  double _height = 200;
 
-  void _incrementCounter() {
-    var request = TestRequest();
-    request.add("aa", "ddd").addHeader("bb", "333");
-    var result = HiNet.getInstance().fire(request);
-    print(result);
+  void _increment() {
+    setState(() {
+      _count++;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    print('42.'.padLeft(5));
     return Scaffold(
-        body: Center(
-            child: Container(
-                width: 200,
-                height: 200,
-                child: Column(children: [
-                  Text(
-                    '$_counter',
-                    style: Theme.of(context).textTheme.headline4,
-                  )
-                ]))));
+      appBar: AppBar(
+        title: Text('测试Title'),
+      ),
+      body: AnimatedPadding(
+        duration: Duration(seconds: 1),
+        padding: const EdgeInsets.only(top: 3.0),
+        curve: Curves.bounceInOut,
+        child: Container(
+          width: 300,
+          height: 300,
+          color: Colors.red,
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        setState(() {
+          _height += 100;
+          if (_height > 500) {
+            _height = 100;
+          }
+        });
+      }),
+    );
   }
 }
