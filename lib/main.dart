@@ -1,3 +1,4 @@
+import 'package:bilibli/http/core/hi_error.dart';
 import 'package:bilibli/http/core/hi_net.dart';
 import 'package:bilibli/http/request/test_request.dart';
 import 'package:flutter/material.dart';
@@ -51,10 +52,19 @@ class _MyHomePageState extends State<MyHomePage> {
   int _count = 0;
   double _height = 200;
 
-  void _increment() {
-    setState(() {
-      _count++;
-    });
+  Future<void> _increment() async {
+    TestRequest request = TestRequest();
+    request.add('aa', 'bbb').add('bbb', '333');
+    try {
+      var result = await HiNet.getInstance().fire(request);
+      print(result);
+    } on NeedAuth catch (e) {
+      print(e);
+    } on NeedLogin catch (e) {
+      print(e);
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -75,12 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       // open detail page
       floatingActionButton: FloatingActionButton(onPressed: () {
-        setState(() {
-          _height += 100;
-          if (_height > 500) {
-            _height = 100;
-          }
-        });
+        _increment();
       }),
     );
   }
