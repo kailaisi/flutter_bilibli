@@ -1,4 +1,5 @@
 import 'package:bilibli/widget/app_bar.dart';
+import 'package:bilibli/widget/login_effect.dart';
 import 'package:bilibli/widget/login_input.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,7 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
+  bool protect = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,11 +21,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
       body: Container(
         child: ListView(
           children: [
+            LoginEffect(
+              protect: protect,
+            ),
             LoginInput(
               title: '用户名',
               hint: '请输入用户名',
               onFocusChanged: (value) {
-                print(value);
+                setState(() {
+                  protect = value;
+                });
               },
             ),
             LoginInput(

@@ -5,7 +5,7 @@ class LoginEffect extends StatefulWidget {
   final bool protect;
   const LoginEffect({
     Key? key,
-    this.protect = false,
+    required this.protect,
   }) : super(key: key);
 
   @override
@@ -25,10 +25,27 @@ class _LoginEffectState extends State<LoginEffect> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _image(true),
+          Image(
+            image: AssetImage('images/logo.png'),
+            height: 90,
+            width: 90,
+          ),
+          _image(false),
         ],
       ),
     );
   }
 
-  _image(bool bool) {}
+  Widget _image(bool left) {
+    var leftImage = widget.protect
+        ? 'images/head_left_protect.png'
+        : 'images/head_left.png';
+    var rightImage = widget.protect
+        ? 'images/head_right_protect.png'
+        : 'images/head_right.png';
+    return Image(
+      height: 90,
+      image: AssetImage(left ? leftImage : rightImage),
+    );
+  }
 }
