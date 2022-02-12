@@ -51,4 +51,8 @@ class HiCache {
   setStringList(String key, List<String> value) {
     _preferences?.setStringList(key, value);
   }
+
+  T get<T>(String key) {
+    return _preferences!.get(key) as T;
+  }
 }

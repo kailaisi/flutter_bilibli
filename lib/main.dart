@@ -1,6 +1,4 @@
-import 'package:bilibli/http/core/hi_error.dart';
-import 'package:bilibli/http/core/hi_net.dart';
-import 'package:bilibli/http/request/test_request.dart';
+import 'package:bilibli/db/hi_cache.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -53,22 +51,12 @@ class _MyHomePageState extends State<MyHomePage> {
   double _height = 200;
 
   Future<void> _increment() async {
-    TestRequest request = TestRequest();
-    request.add('aa', 'bbb').add('bbb', '333');
-    try {
-      var result = await HiNet.getInstance().fire(request);
-      print(result);
-    } on NeedAuth catch (e) {
-      print(e);
-    } on NeedLogin catch (e) {
-      print(e);
-    } catch (e) {
-      print(e);
-    }
+    testCache();
   }
 
   @override
   Widget build(BuildContext context) {
+    HiCache.getInstance();
     return Scaffold(
       appBar: AppBar(
         title: Text('测试Title'),
@@ -88,5 +76,11 @@ class _MyHomePageState extends State<MyHomePage> {
         _increment();
       }),
     );
+  }
+
+  void testCache() {
+    HiCache.getInstance().setString('aa', '1234');
+    var value = HiCache.getInstance().get('aa');
+    print('_MyHomePageState.testCache:${value}');
   }
 }

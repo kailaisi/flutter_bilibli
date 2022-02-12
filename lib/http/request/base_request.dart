@@ -6,7 +6,7 @@ abstract class BaseRequest {
   var useHttps = true;
 
   String authority() {
-    return "baidu.com";
+    return "api.devio.org";
   }
 
   HttpMethod httpMethod();
@@ -14,6 +14,10 @@ abstract class BaseRequest {
   String path();
 
   String url() {
+    return uri().toString();
+  }
+
+  Uri uri() {
     Uri uri;
     var pathStr = path();
     if (pathParams != null) {
@@ -28,7 +32,7 @@ abstract class BaseRequest {
     } else {
       uri = Uri.http(authority(), pathStr, params);
     }
-    return uri.toString();
+    return uri;
   }
 
   bool needLogin();

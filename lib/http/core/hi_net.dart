@@ -1,8 +1,7 @@
+import 'package:bilibli/http/core/dio_adapter.dart';
 import 'package:bilibli/http/core/hi_error.dart';
 import 'package:bilibli/http/core/hi_net_adapter.dart';
-import 'package:bilibli/http/core/mock_adapter.dart';
 import 'package:bilibli/http/request/base_request.dart';
-import 'package:get/get_connect/http/src/http/mock/http_request_mock.dart';
 
 class HiNet {
   HiNet._();
@@ -52,7 +51,7 @@ class HiNet {
 
   Future<dynamic> send<T>(BaseRequest request) async {
     printLog('url:${request.url()}');
-    HiNetAdapter adapter = MockAdapter();
+    HiNetAdapter adapter = DioAdapter();
     return adapter.send(request);
   }
 
