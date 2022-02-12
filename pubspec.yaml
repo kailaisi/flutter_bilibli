@@ -32,6 +32,7 @@ dependencies:
   get: ^4.3.8
   dio: ^4.0.4
   http: ^0.13.4
+  flutter_screenutil: ^5.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
