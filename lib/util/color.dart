@@ -15,3 +15,18 @@ const MaterialColor primary = const MaterialColor(
     900: Color(0xFF0D47A1),
   },
 );
+const MaterialColor white = const MaterialColor(
+  0xffffffff,
+  <int, Color>{
+    50: Color(0xffffffff),
+    100: Color(0xffffffff),
+    200: Color(0xffffffff),
+    300: Color(0xffffffff),
+    400: Color(0xffffffff),
+    500: Color(0xffffffff),
+    600: Color(0xffffffff),
+    700: Color(0xffffffff),
+    800: Color(0xffffffff),
+    900: Color(0xffffffff),
+  },
+);

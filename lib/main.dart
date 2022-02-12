@@ -2,6 +2,7 @@ import 'package:bilibli/db/hi_cache.dart';
 import 'package:bilibli/http/core/hi_error.dart';
 import 'package:bilibli/http/dao/login_dao.dart';
 import 'package:bilibli/page/registration_page.dart';
+import 'package:bilibli/util/color.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: white,
       ),
       home: Center(
         child: RegistrationPage(),
