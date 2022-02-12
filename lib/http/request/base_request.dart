@@ -1,3 +1,5 @@
+import 'package:bilibli/http/dao/login_dao.dart';
+
 enum HttpMethod { GET, POST, DELETE }
 
 ///基础请求
@@ -32,13 +34,19 @@ abstract class BaseRequest {
     } else {
       uri = Uri.http(authority(), pathStr, params);
     }
+    if (needLogin()) {
+      addHeader(LoginDao.BOARDING_PASS, LoginDao.getBoardingPass());
+    }
     return uri;
   }
 
   bool needLogin();
 
   Map<String, String> params = Map();
-  Map<String, String> headers = Map();
+  Map<String, String> headers = {
+    'course-flag': 'fa',
+    'auth-token': 'MjAyMC0wNi9yMyAwMzoyNTowMQ==fa',
+  };
   BaseRequest add(String k, Object v) {
     params[k] = v.toString();
     return this;

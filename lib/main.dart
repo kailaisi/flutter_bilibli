@@ -1,4 +1,7 @@
 import 'package:bilibli/db/hi_cache.dart';
+import 'package:bilibli/http/core/hi_error.dart';
+import 'package:bilibli/http/dao/login_dao.dart';
+import 'package:bilibli/page/registration_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -31,7 +34,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Center(
-        child: MyHomePage(title: 'Flutter Demo Home Page'),
+        child: RegistrationPage(),
       ),
     );
   }
@@ -51,7 +54,8 @@ class _MyHomePageState extends State<MyHomePage> {
   double _height = 200;
 
   Future<void> _increment() async {
-    testCache();
+    //testCache();
+    testLogin();
   }
 
   @override
@@ -82,5 +86,19 @@ class _MyHomePageState extends State<MyHomePage> {
     HiCache.getInstance().setString('aa', '1234');
     var value = HiCache.getInstance().get('aa');
     print('_MyHomePageState.testCache:${value}');
+  }
+
+  Future<void> testLogin() async {
+    try {
+      var result = await LoginDao.registration(
+          '541018378@qq.com', 'wu03102896528', '5617812', '1234');
+      // print('_MyHomePageState.testLogin:${result}');
+      result = await LoginDao.login('541018378@qq.com', 'wu03102896528');
+      print('${result}');
+    } on NeedAuth catch (e) {
+      print(e);
+    } on NeedLogin catch (e) {
+      print(e);
+    }
   }
 }
