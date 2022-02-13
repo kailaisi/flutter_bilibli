@@ -2,6 +2,7 @@ import 'package:bilibli/http/core/hi_error.dart';
 import 'package:bilibli/http/dao/login_dao.dart';
 import 'package:bilibli/util/string_util.dart';
 import 'package:bilibli/widget/app_bar.dart';
+import 'package:bilibli/widget/login_button.dart';
 import 'package:bilibli/widget/login_effect.dart';
 import 'package:bilibli/widget/login_input.dart';
 import 'package:flutter/material.dart';
@@ -94,7 +95,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-              child: _loginButton(),
+              child: LoginButton(
+                title: '登录',
+                onTap: () {
+                  if (loginEnable) {
+                    checkParams();
+                  } else {}
+                },
+              ),
             )
           ],
         ),
@@ -107,20 +115,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
       loginEnable =
           userName.isNotEmpty && password.isNotEmpty && rePassword.isNotEmpty;
     });
-  }
-
-  _loginButton() {
-    return InkWell(
-      onTap: () {
-        if (loginEnable) {
-          checkParams();
-        } else {}
-      },
-      child: Text(
-        '注册',
-        style: TextStyle(color: loginEnable ? Colors.blue : Colors.grey[300]),
-      ),
-    );
   }
 
   Future<void> _login() async {

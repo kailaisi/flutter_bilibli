@@ -1,7 +1,9 @@
 import 'package:bilibli/db/hi_cache.dart';
 import 'package:bilibli/http/core/hi_error.dart';
 import 'package:bilibli/http/dao/login_dao.dart';
+import 'package:bilibli/page/login_page.dart';
 import 'package:bilibli/page/registration_page.dart';
+import 'package:bilibli/page/video_detail_page.dart';
 import 'package:bilibli/util/color.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: white,
       ),
       home: Center(
-        child: RegistrationPage(),
+        child: VideoDetaiPage(),
       ),
     );
   }

@@ -22,11 +22,10 @@ class LoginDao {
     } else {
       request = RegistorRequest();
     }
-    request
-        .add('userName', userName)
-        .add('password', password)
-        .add('imoocId', immocId)
-        .add('orderId', orderId);
+    request.add('userName', userName).add('password', password);
+    if (immocId != null) {
+      request.add('imoocId', immocId).add('orderId', orderId);
+    }
     var result = await HiNet.getInstance().fire(request);
     print('LoginDao._send${result}');
     if (result['code'] == 0 && result['data'] != null) {

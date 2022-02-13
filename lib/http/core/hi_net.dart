@@ -1,6 +1,6 @@
-import 'package:bilibli/http/core/dio_adapter.dart';
 import 'package:bilibli/http/core/hi_error.dart';
 import 'package:bilibli/http/core/hi_net_adapter.dart';
+import 'package:bilibli/http/core/mock_adapter.dart';
 import 'package:bilibli/http/request/base_request.dart';
 
 class HiNet {
@@ -26,12 +26,11 @@ class HiNet {
       error = e;
       printLog(error);
     }
-
     if (response == null) {
       printLog(error);
     }
     var result = response?.data;
-    printLog(result);
+    printLog(" fire result:${result}");
     var status = response?.statusCode ?? 0;
     switch (status) {
       case 200:
@@ -51,7 +50,7 @@ class HiNet {
 
   Future<dynamic> send<T>(BaseRequest request) async {
     printLog('url:${request.url()}');
-    HiNetAdapter adapter = DioAdapter();
+    HiNetAdapter adapter = MockAdapter();
     return adapter.send(request);
   }
 
