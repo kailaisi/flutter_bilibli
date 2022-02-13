@@ -1,6 +1,8 @@
-import 'package:chewie/chewie.dart';
+import 'package:chewie/chewie.dart' hide MaterialControls;
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+
+import 'video_controller.dart';
 
 class VideoView extends StatefulWidget {
   final String url;
@@ -32,6 +34,7 @@ class _VideoViewState extends State<VideoView> {
       videoPlayerController: _videoPlayerController,
       autoPlay: widget.autoPlay,
       looping: widget.looping,
+      customControls: MaterialControls(),
     );
   }
 
