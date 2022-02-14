@@ -1,8 +1,8 @@
+import 'package:bilibli/util/view_util.dart';
+import 'package:bilibli/widget/video_controller.dart';
 import 'package:chewie/chewie.dart' hide MaterialControls;
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-
-import 'video_controller.dart';
 
 class VideoView extends StatefulWidget {
   final String url;
@@ -26,6 +26,10 @@ class VideoView extends StatefulWidget {
 class _VideoViewState extends State<VideoView> {
   late VideoPlayerController _videoPlayerController;
   late ChewieController _chewieController;
+  get _placeHolder => FractionallySizedBox(
+        widthFactor: 1,
+        child: Image.network(widget.cover),
+      );
   @override
   void initState() {
     super.initState();
@@ -34,7 +38,12 @@ class _VideoViewState extends State<VideoView> {
       videoPlayerController: _videoPlayerController,
       autoPlay: widget.autoPlay,
       looping: widget.looping,
-      customControls: MaterialControls(),
+      placeholder: _placeHolder,
+      customControls: MaterialControls(
+        showLoadingOnInitialize: false,
+        showBigPlayIcon: false,
+        bottomGradient: blackLinearGradint(),
+      ),
     );
   }
 
