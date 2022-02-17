@@ -2,6 +2,8 @@ import 'package:bilibli/util/view_util.dart';
 import 'package:bilibli/widget/video_controller.dart';
 import 'package:chewie/chewie.dart' hide MaterialControls;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:orientation/orientation.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoView extends StatefulWidget {
@@ -45,13 +47,15 @@ class _VideoViewState extends State<VideoView> {
         bottomGradient: blackLinearGradint(),
       ),
     );
+    _videoPlayerController.addListener(_fullScreenListener);
   }
 
   @override
   void dispose() {
-    super.dispose();
+    _videoPlayerController.removeListener(_fullScreenListener);
     _videoPlayerController.dispose();
     _chewieController.dispose();
+    super.dispose();
   }
 
   @override
@@ -63,5 +67,12 @@ class _VideoViewState extends State<VideoView> {
       height: height,
       child: Chewie(controller: _chewieController),
     );
+  }
+
+  void _fullScreenListener() {
+    final size = MediaQuery.of(context).size;
+    if (size.width > size.height) {
+      OrientationPlugin.forceOrientation(DeviceOrientation.portraitUp);
+    }
   }
 }
