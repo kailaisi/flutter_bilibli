@@ -12,6 +12,7 @@ class VideoView extends StatefulWidget {
   final bool autoPlay;
   final bool looping;
   final double aspectRatio;
+  final Widget? overlayUi;
   const VideoView({
     Key? key,
     required this.url,
@@ -19,6 +20,7 @@ class VideoView extends StatefulWidget {
     this.autoPlay = false,
     this.looping = false,
     this.aspectRatio = 16 / 9,
+    this.overlayUi = null,
   }) : super(key: key);
 
   @override
@@ -44,6 +46,7 @@ class _VideoViewState extends State<VideoView> {
       customControls: MaterialControls(
         showLoadingOnInitialize: false,
         showBigPlayIcon: false,
+        overlayUI: widget.overlayUi,
         bottomGradient: blackLinearGradint(),
       ),
     );
