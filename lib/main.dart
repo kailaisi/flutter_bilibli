@@ -1,6 +1,7 @@
 import 'package:bilibli/db/hi_cache.dart';
 import 'package:bilibli/http/core/hi_error.dart';
 import 'package:bilibli/http/dao/login_dao.dart';
+import 'package:bilibli/page/home_page.dart';
 import 'package:bilibli/page/login_page.dart';
 import 'package:bilibli/page/registration_page.dart';
 import 'package:bilibli/page/video_detail_page.dart';
@@ -11,34 +12,28 @@ void main() {
   runApp(MyApp());
 }
 
-class NewTest extends StatefulWidget {
-  NewTest({Key? key}) : super(key: key);
+class BiliApp extends StatefulWidget {
+  const BiliApp({Key? key}) : super(key: key);
 
   @override
-  _NewTestState createState() => _NewTestState();
+  _BiliAppState createState() => _BiliAppState();
 }
 
-class _NewTestState extends State<NewTest> {
+class _BiliAppState extends State<BiliApp> {
+  BiliRouteDelegate _delegate = BiliRouteDelegate();
+  BiliRouteInformationParser _parser = BiliRouteInformationParser();
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: null,
+    // 定义Route
+    var widget = Router(
+      routerDelegate: _delegate,
+      routeInformationParser: _parser,
+      routeInformationProvider: PlatformRouteInformationProvider(
+        initialRouteInformation: RouteInformation(location: '/'),
+      ),
     );
-  }
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: white,
-      ),
-      home: Center(
-        child: VideoDetaiPage(),
-      ),
+      home: widget,
     );
   }
 }
@@ -104,4 +99,67 @@ class _MyHomePageState extends State<MyHomePage> {
       print(e);
     }
   }
+}
+
+class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin {
+  final GlobalKey<NavigatorState> navigatorKey;
+
+  BiliRouteDelegate() : navigatorKey = GlobalKey<NavigatorState>();
+  VideoModel? videoModel;
+  BiliRoutePath? path;
+  List<MaterialPage> pages = [];
+  @override
+  Widget build(BuildContext context) {
+    pages = [
+      pageWrap(
+        HomePage(
+          onJumpToDetail: (value) {
+            this.videoModel = value;
+            notifyListeners();
+          },
+        ),
+      ),
+      if (videoModel != null) pageWrap(VideoDetaiPage(videoModel: videoModel!)),
+    ];
+    return Navigator(
+      key: navigatorKey,
+      pages: pages,
+      onPopPage: (route, result) {
+        if (!route.didPop(result)) {
+          return false;
+        } else {
+          return true;
+        }
+      },
+    );
+  }
+
+  @override
+  Future<void> setNewRoutePath(BiliRoutePath configuration) async {
+    this.path = configuration;
+  }
+}
+
+class BiliRouteInformationParser extends RouteInformationParser<BiliRoutePath> {
+  @override
+  Future<BiliRoutePath> parseRouteInformation(RouteInformation route) async {
+    final uri = Uri.parse(route.location!);
+    print('uri:${uri}');
+    if (uri.pathSegments.length == 0) {
+      return BiliRoutePath.home();
+    } else {
+      return BiliRoutePath.detail();
+    }
+  }
+}
+
+class BiliRoutePath {
+  final String location;
+  BiliRoutePath.home() : location = '/';
+  BiliRoutePath.detail() : location = 'detail';
+}
+
+pageWrap(Widget child) {
+  return MaterialPage(child: child);
 }

@@ -1,11 +1,16 @@
 import 'dart:io';
 
+import 'package:bilibli/page/home_page.dart';
 import 'package:bilibli/widget/app_bar.dart';
 import 'package:bilibli/widget/video_view.dart';
 import 'package:flutter/material.dart';
 
 class VideoDetaiPage extends StatefulWidget {
-  const VideoDetaiPage({Key? key}) : super(key: key);
+  final VideoModel videoModel;
+  const VideoDetaiPage({
+    Key? key,
+    required this.videoModel,
+  }) : super(key: key);
 
   @override
   _VideoDetaiPageState createState() => _VideoDetaiPageState();
